@@ -6,29 +6,28 @@ let actualImage = 0;
 
 sliderDot[0].classList.add('slider__dot_active');
 
-sliderArrowNext.onclick = () => changeImageArrow(1);
-sliderArrowPrev.onclick = () => changeImageArrow(-1);
+sliderArrowNext.onclick = () => clickArrow(1);
+sliderArrowPrev.onclick = () => clickArrow(-1);
 
 for (let i = 0; i < sliderDot.length; i++) {
-    sliderDot[i].onclick = () => changeImageDot(i);
+    sliderDot[i].onclick = () => clickDot(i);
 }
 
-function changeImageArrow(upOrDown) {
-    sliderImage[actualImage].classList.remove('slider__item_active');
-    sliderDot[actualImage].classList.remove('slider__dot_active');
-    actualImage += upOrDown;
-
-    if (actualImage === sliderImage.length && upOrDown === 1) {
-        actualImage = 0;
-    } else if (actualImage < 0 && upOrDown === -1) {
-        actualImage = sliderImage.length - 1;
+function clickArrow(upOrDown) {
+    if (actualImage + upOrDown === sliderImage.length && upOrDown === 1) {
+        changeImage(0);
+    } else if (actualImage + upOrDown < 0 && upOrDown === -1) {
+        changeImage(sliderImage.length - 1);
+    } else {
+        changeImage(actualImage + upOrDown);
     }
-
-    sliderImage[actualImage].classList.add('slider__item_active');
-    sliderDot[actualImage].classList.add('slider__dot_active');
 }
 
-function changeImageDot(index) {
+function clickDot(index) {
+    changeImage(index);
+}
+
+function changeImage(index) {
     sliderImage[actualImage].classList.remove('slider__item_active');
     sliderDot[actualImage].classList.remove('slider__dot_active');
     sliderImage[index].classList.add('slider__item_active');
